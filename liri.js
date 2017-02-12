@@ -45,7 +45,7 @@ var spotifyFunction = function() {
 
 var tweetFunction = function() {
 	console.log("-------------------------");
-	var params = {screen_name: 'bootcamp_coding', count:5};
+	var params = {screen_name: 'bootcamp_coding', count:20};
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
   	for (x=0; x<tweets.length; x++) {
