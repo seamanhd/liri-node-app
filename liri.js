@@ -13,24 +13,6 @@ var client = new Twitter({
   	access_token_secret: keys.twitterKeys.access_token_secret
 });
 
-var spotifyFunction = function() {
-	if (commandTwo === "undefined") {
-			commandTwo = "The Sign"
-		};
-	spotify.search({ type: 'track', query: commandTwo}, function(err, data) {
-    if ( err ) {
-        console.log('Error occurred: ' + err);
-        return;
-    }
- 	
-    console.log("Artist: " + data.tracks.items[0].artists[0].name);
-    console.log("Song: " + data.tracks.items[0].name);
-    console.log("Album: " + data.tracks.items[0].album.name);
-    console.log("Preview: " + data.tracks.items[0].preview_url);
-
-});
-
-}; 
 
 
 var command = (process.argv[2]);
@@ -47,18 +29,35 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
   	for (x=0; x<tweets.length; x++) {
   		console.log(tweets[x].text);
-  		console.log("-------------");
+  		console.log("-------------------------");
   }
   	}
     
   
 });
 
-};
-else if (command === "spotify-this-song") {
-	spotifyFunction();
-};
-else if (command === "movie-this") {
+} else if (command === "spotify-this-song") {
+	if (commandTwo == undefined) {
+			commandTwo = "The Sign by Ace of Base"	}
+		
+	spotify.search({ type: 'track', query: commandTwo}, function(err, data) {
+    if ( err ) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+ 	console.log("------------------------------------");
+    console.log("Artist: " + data.tracks.items[0].artists[0].name);
+    console.log("Song: " + data.tracks.items[0].name);
+    console.log("Album: " + data.tracks.items[0].album.name);
+    console.log("Preview: " + data.tracks.items[0].preview_url);
+    console.log("------------------------------------");
+});
+
+} else if (command === "movie-this") {
+
+	if (commandTwo == undefined) {
+		commandTwo = "Mr. Nobody";
+	}
 	var options = { method: 'GET',
   url: 'https://api.themoviedb.org/3/search/movie',
   qs: 
@@ -83,5 +82,23 @@ request(options, function (error, response, body) {
    console.log("------------------------------------");
 });
 
-};
-else {};
+} else {};
+
+var spotifyFunction = function() {
+	if (commandTwo === "undefined") {
+			commandTwo = "The Sign"
+		};
+	spotify.search({ type: 'track', query: commandTwo}, function(err, data) {
+    if ( err ) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+ 	
+    console.log("Artist: " + data.tracks.items[0].artists[0].name);
+    console.log("Song: " + data.tracks.items[0].name);
+    console.log("Album: " + data.tracks.items[0].album.name);
+    console.log("Preview: " + data.tracks.items[0].preview_url);
+
+});
+
+}; 
